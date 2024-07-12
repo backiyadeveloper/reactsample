@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FashionFrenzy</title>
+    <link rel="icon" href="./img/brandimg.png">
+    <style>
+      
+        .bt{
+            border: none;
+            background-color: cornflowerblue;
+            color: white;
+            height: 35px;
+            width: 150px;
+            border-radius: 20px;
+        }
+        .body1{
+            margin-top: 100px;
+            margin-left: 450px;
+            display: grid;
+            width: 500px;
+            padding: 50px;
+            text-align: center;
+            border-radius: 50px;
+            background-color: white;
+            justify-content: center;
+            align-items: center;
+            
+        }
+    </style>
+</head>
+<body  style=" background-image: linear-gradient(to right ,rgb(239, 177, 239),rgb(168, 125, 213));">
+    <div class="body1">
+    <div class="product-details">
+        <img id="product-image" height="300px" src="" alt="Product Image">
+        <h2 id="product-title"></h2>
+        <p id="product-description"></p>
+        <p class="price" id="product-price"></p>
+        <button class="bt" onclick="buyProduct()">buy</button>
+    </div>
+</div>
+    <script>
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            console.log(name)
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            console.log(name)
+            const regex = new RegExp('[\\?&]' + name + '=([^&#]+)');
+            console.log(regex)
+            const results = regex.exec(location.search);
+            console.log(location.search)
+            console.log(results)
+            console.log(decodeURIComponent(results[1].replace(/\+/g, ' ')))
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Get product details from URL parameters
+        const imageUrl = getUrlParameter('image');
+        const title = getUrlParameter('title');
+        const description = getUrlParameter('description');
+        const price = getUrlParameter('price');
+
+        // Set product details on the page
+        document.getElementById('product-image').src = imageUrl;
+        document.getElementById('product-title').textContent = title;
+        document.getElementById('product-description').textContent = description;
+        document.getElementById('product-price').textContent = `$${price}`;
+
+        const conversionRate = 82.5; // Example conversion rate, adjust as needed
+
+        // Function to handle Buy button click
+        function buyProduct() {
+            const priceInUsd = parseFloat(price);
+            const priceInInr = priceInUsd * conversionRate;
+            alert(`Price in INR: ₹${priceInInr.toFixed(2)}\nBuy successful`);
+        }
+    </script>
+</body>
+</html>
